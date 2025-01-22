@@ -1,6 +1,13 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About SOLBrain AI | Next-Gen Solana Intelligence",
+  description:
+    "Discover how SOLBrain AI combines advanced artificial intelligence with Solana blockchain data to deliver unprecedented insights and analysis capabilities.",
+};
 
 export default function About() {
   return (
@@ -28,10 +35,10 @@ export default function About() {
               Your AI-Powered Solana Super Brain
             </h2>
             <p className="text-foreground-muted leading-relaxed text-lg">
-              Welcome to the future of blockchain intelligence. SOLBrain AI
-              isn't just another AI assistant - it's your direct neural link to
-              the Solana blockchain, processing millions of data points in
-              real-time to give you unparalleled insights and answers.
+              Welcome to the future of blockchain intelligence. SOLBrain AI isn
+              {"'"}t just another AI assistant - it{"'"}s your direct neural
+              link to the Solana blockchain, processing millions of data points
+              in real-time to give you unparalleled insights and answers.
             </p>
           </motion.section>
 
