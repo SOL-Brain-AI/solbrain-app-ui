@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         parameters: z.object({
           tokenMint: z.string().describe("The token's mint address"),
         }),
-        execute: async ({ tokenMint }) => {
+        execute: async () => {
           return "We're working on token info retrieval. Please check back later!";
         },
       }),
