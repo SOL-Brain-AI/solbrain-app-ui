@@ -2,12 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "SOLBrain AI | Your Solana Super Brain",
-  description: "Harness the power of AI to analyze Solana smart contracts, track real-time blockchain data, and get instant insights. Your ultimate companion for all things Solana.",
-};
 
 export default function Home() {
   return (
@@ -26,7 +20,8 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-xl text-foreground-muted mb-8 max-w-2xl mx-auto">
-            Your AI-powered companion for all things Solana. Get instant answers, analyze smart contracts, and stay ahead of the curve.
+            Your AI-powered companion for all things Solana. Get instant
+            answers, analyze smart contracts, and stay ahead of the curve.
           </p>
           <Link
             href="/chat"
@@ -41,19 +36,23 @@ export default function Home() {
           {[
             {
               title: "Smart Contract Analysis",
-              description: "Get instant insights into any Solana smart contract with our AI-powered analysis.",
+              description:
+                "Get instant insights into any Solana smart contract with our AI-powered analysis.",
             },
             {
               title: "Real-time Data",
-              description: "Access and analyze blockchain data in real-time with natural language queries.",
+              description:
+                "Access and analyze blockchain data in real-time with natural language queries.",
             },
             {
               title: "Market Intelligence",
-              description: "Stay informed with AI-driven market analysis and trend predictions.",
+              description:
+                "Stay informed with AI-driven market analysis and trend predictions.",
             },
             {
               title: "Developer Tools",
-              description: "Powerful tools to help you build and debug Solana applications faster.",
+              description:
+                "Powerful tools to help you build and debug Solana applications faster.",
             },
           ].map((feature, index) => (
             <motion.div
@@ -63,7 +62,9 @@ export default function Home() {
               transition={{ delay: index * 0.1 }}
               className="glass-panel p-6 hover:bg-background-light/40 transition-all duration-300"
             >
-              <h3 className="text-2xl font-bold gradient-text mb-4">{feature.title}</h3>
+              <h3 className="text-2xl font-bold gradient-text mb-4">
+                {feature.title}
+              </h3>
               <p className="text-foreground-muted">{feature.description}</p>
             </motion.div>
           ))}
@@ -76,7 +77,9 @@ export default function Home() {
           transition={{ delay: 0.2 }}
           className="text-center glass-panel p-8"
         >
-          <h2 className="text-3xl font-bold gradient-text mb-4">Ready to get started?</h2>
+          <h2 className="text-3xl font-bold gradient-text mb-4">
+            Ready to get started?
+          </h2>
           <p className="text-foreground-muted mb-6">
             Join the future of blockchain intelligence with SOLBrain AI.
           </p>
