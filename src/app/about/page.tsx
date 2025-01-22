@@ -28,10 +28,12 @@ export default function About() {
               Your AI-Powered Solana Super Brain
             </h2>
             <p className="text-foreground-muted leading-relaxed text-lg">
-              Welcome to the future of blockchain intelligence. SOLBrain AI isn
-              {"'"}t just another AI assistant - it{"'"}s your direct neural
-              link to the Solana blockchain, processing millions of data points
-              in real-time to give you unparalleled insights and answers.
+              Welcome to the future of blockchain intelligence.
+              {"\n\n"}
+              SOLBrain AI isn{"'"}t just another AI assistant - it{"'"}s your
+              direct neural link to the Solana blockchain, processing millions
+              of data points in real-time to give you unparalleled insights and
+              answers.
             </p>
           </motion.section>
 
@@ -47,10 +49,13 @@ export default function About() {
             <div className="glass-panel bg-background-light/10 p-6">
               <p className="text-foreground-muted leading-relaxed text-lg">
                 While others talk to databases, we communicate directly with the
-                blockchain. Experience real-time data processing that turns
-                complex blockchain metrics into crystal-clear insights. From
-                transaction analysis to smart contract interactions, we make the
-                complex simple.
+                blockchain.
+                {"\n\n"}
+                Experience real-time data processing that turns complex
+                blockchain metrics into crystal-clear insights.
+                {"\n\n"}
+                From transaction analysis to smart contract interactions, we
+                make the complex simple.
               </p>
             </div>
           </motion.section>
@@ -115,9 +120,11 @@ export default function About() {
                 <p className="text-foreground-muted leading-relaxed text-lg">
                   Our neural networks are directly interfaced with Solana{"'"}s
                   RPC nodes, creating a symbiotic relationship between AI and
-                  blockchain. This unique architecture allows us to process and
-                  analyze blockchain data at unprecedented speeds, turning raw
-                  data into actionable intelligence in milliseconds.
+                  blockchain.
+                  {"\n\n"}
+                  This unique architecture allows us to process and analyze
+                  blockchain data at unprecedented speeds, turning raw data into
+                  actionable intelligence in milliseconds.
                 </p>
               </div>
             </div>
