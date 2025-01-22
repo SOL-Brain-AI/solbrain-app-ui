@@ -1,24 +1,24 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { useSendTransaction } from "@privy-io/react-auth";
 import { AuthGuard } from "@/components/AuthGuard";
-import { usePrivy, useWallets } from "@privy-io/react-auth";
-import { createPaymentTransaction } from "@/lib/solana";
-import { PublicKey } from "@solana/web3.js";
 import { useState } from "react";
 
 export default function ChatPage() {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit: originalHandleSubmit,
-  } = useChat();
-  const { authenticated } = usePrivy();
-  const { wallets } = useWallets();
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
   const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    setIsProcessing(true);
+    try {
+      await handleSubmit(e);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <AuthGuard>
@@ -43,22 +43,27 @@ export default function ChatPage() {
                       : "bg-background-light/50 border border-white/5 text-foreground"
                   }`}
                 >
-                  {m.content}
+                  {m.toolInvocations
+                    ? m.toolInvocations.map((toolInvocation) => {
+                        return (
+                          <div key={toolInvocation.toolCallId}>
+                            {/* @ts-ignore this will exist */}
+                            {toolInvocation.result}
+                          </div>
+                        );
+                      })
+                    : m.content}
                 </div>
               </div>
             ))}
             {messages.length === 0 && (
               <div className="text-center text-foreground-muted mt-8">
-                Start a conversation by sending a message below! (0.05 USDC per
-                message)
+                Start a conversation by sending a message below!
               </div>
             )}
           </div>
 
-          <form onSubmit={() => {}} className="flex flex-col space-y-4">
-            {error && (
-              <div className="text-red-500 text-sm text-center">{error}</div>
-            )}
+          <form onSubmit={onSubmit} className="flex flex-col space-y-4">
             <div className="flex space-x-4">
               <input
                 value={input}
@@ -74,7 +79,7 @@ export default function ChatPage() {
                   isProcessing ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                {isProcessing ? "Processing..." : "Send (0.05 USDC)"}
+                {isProcessing ? "Processing..." : "Send"}
               </button>
             </div>
           </form>

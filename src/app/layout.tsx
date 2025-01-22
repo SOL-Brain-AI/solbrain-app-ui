@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react";
 import { PrivyProvider } from "@/components/PrivyProvider";
+import { Twitter, Send } from "lucide-react";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
@@ -46,6 +47,22 @@ export default function RootLayout({
                   >
                     Roadmap
                   </Link>
+                  <a
+                    href="https://twitter.com/solbrain_ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground-muted hover:text-foreground transition-colors"
+                  >
+                    <Twitter size={20} />
+                  </a>
+                  <a
+                    href="https://t.me/solbrain_ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground-muted hover:text-foreground transition-colors"
+                  >
+                    <Send size={20} />
+                  </a>
                 </div>
               </nav>
             </header>

@@ -1,80 +1,83 @@
-import {
-  createTransferCheckedInstruction,
-  getAssociatedTokenAddress,
-  TOKEN_PROGRAM_ID,
-  ASSOCIATED_TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
-import { Connection, PublicKey, Transaction } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 
-// USDC token mint address on Solana mainnet
-const USDC_MINT = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
-// Your wallet address to receive payments
-const PAYMENT_WALLET = new PublicKey("YOUR_WALLET_ADDRESS");
+// Initialize connection with Helius RPC (using env variable)
+const connection = new Connection(
+  `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
+);
 
-// Amount in USDC (0.05 USDC = 50000 lamports since USDC has 6 decimals)
-const PAYMENT_AMOUNT = 50000;
+async function getTokenPrice(tokenMint: string): Promise<any> {
+  try {
+    // Fetch price data from CoinGecko
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/token_price/solana?contract_addresses=${tokenMint}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true`,
+      {
+        headers: {
+          "x-cg-demo-api-key": process.env.CG_DEMO_API_KEY!,
+        },
+      }
+    );
 
-export async function createPaymentTransaction(
-  userWallet: PublicKey
-): Promise<Transaction> {
-  const connection = new Connection("https://api.mainnet-beta.solana.com");
+    if (!response.ok) {
+      throw new Error(`Failed to fetch price: ${response.statusText}`);
+    }
 
-  // Get the user's USDC token account
-  const userTokenAccount = await getAssociatedTokenAddress(
-    USDC_MINT,
-    userWallet,
-    false,
-    TOKEN_PROGRAM_ID,
-    ASSOCIATED_TOKEN_PROGRAM_ID
-  );
+    const data = await response.json();
+    console.log({ data });
+    const tokenData = data[tokenMint];
 
-  // Get the payment receiver's USDC token account
-  const receiverTokenAccount = await getAssociatedTokenAddress(
-    USDC_MINT,
-    PAYMENT_WALLET,
-    false,
-    TOKEN_PROGRAM_ID,
-    ASSOCIATED_TOKEN_PROGRAM_ID
-  );
+    if (!tokenData) {
+      return null;
+    }
 
-  // Create the transfer instruction
-  const transferInstruction = createTransferCheckedInstruction(
-    userTokenAccount,
-    USDC_MINT,
-    receiverTokenAccount,
-    userWallet,
-    PAYMENT_AMOUNT,
-    6 // USDC decimals
-  );
-
-  // Get the latest blockhash
-  const { blockhash, lastValidBlockHeight } =
-    await connection.getLatestBlockhash();
-
-  // Create and return the transaction
-  const transaction = new Transaction({
-    feePayer: userWallet,
-    blockhash,
-    lastValidBlockHeight,
-  }).add(transferInstruction);
-
-  return transaction;
+    return {
+      price: tokenData.usd,
+      priceChange24h: tokenData.usd_24h_change,
+      volume24h: tokenData.usd_24h_vol,
+      marketCap: tokenData.usd_market_cap,
+    };
+  } catch (error) {
+    console.error("Error fetching token price:", error);
+    return null;
+  }
 }
 
-export async function verifyTransaction(signature: string): Promise<boolean> {
-  const connection = new Connection("https://api.mainnet-beta.solana.com");
-
+export async function getTokenInfo(tokenMint: string): Promise<any> {
   try {
-    const tx = await connection.getTransaction(signature, {
-      maxSupportedTransactionVersion: 0,
-    });
+    const mint = new PublicKey(tokenMint);
+    const accountInfo = await connection.getParsedAccountInfo(mint);
 
-    if (!tx) return false;
+    if (!accountInfo.value) {
+      return "Token not found";
+    }
 
-    // Verify the transaction succeeded and contains our expected payment
-    return tx.meta?.err === null;
+    const data = accountInfo.value.data;
+    if (!data || typeof data !== "object" || !("parsed" in data)) {
+      return "Not a valid token mint";
+    }
+
+    const parsedData = data.parsed;
+    if (parsedData.type !== "mint") {
+      return "Not a token mint account";
+    }
+
+    const info = parsedData.info;
+    const priceInfo = await getTokenPrice(tokenMint);
+
+    return {
+      address: tokenMint,
+      decimals: info.decimals,
+      supply: Number(info.supply) / Math.pow(10, info.decimals),
+      authority: info.mintAuthority ?? null,
+      freezeAuthority: info.freezeAuthority ?? null,
+      isInitialized: true,
+      // Price and market data
+      price: priceInfo?.price ?? null,
+      priceChange24h: priceInfo?.priceChange24h ?? null,
+      volume24h: priceInfo?.volume24h ?? null,
+      marketCap: priceInfo?.marketCap ?? null,
+    };
   } catch (error) {
-    console.error("Error verifying transaction:", error);
-    return false;
+    console.error("Error fetching token info:", error);
+    return "Error fetching token info";
   }
 }
