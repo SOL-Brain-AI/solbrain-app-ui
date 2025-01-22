@@ -4,7 +4,8 @@ import { GeistMono } from "geist/font/mono";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react";
 import { PrivyProvider } from "@/components/PrivyProvider";
-import { Twitter, Send } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXTwitter, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
@@ -53,7 +54,7 @@ export default function RootLayout({
                     rel="noopener noreferrer"
                     className="text-foreground-muted hover:text-foreground transition-colors"
                   >
-                    <Twitter size={20} />
+                    <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
                   </a>
                   <a
                     href="https://t.me/+pK_LKZ6gs6FiMzUx"
@@ -61,7 +62,7 @@ export default function RootLayout({
                     rel="noopener noreferrer"
                     className="text-foreground-muted hover:text-foreground transition-colors"
                   >
-                    <Send size={20} />
+                    <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
                   </a>
                 </div>
               </nav>
