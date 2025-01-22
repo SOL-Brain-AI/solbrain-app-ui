@@ -1,7 +1,5 @@
 import { openai } from "@ai-sdk/openai";
-import { streamText, tool } from "ai";
-import { getTokenInfo } from "@/lib/solana";
-import { z } from "zod";
+import { streamText } from "ai";
 
 export function errorHandler(error: unknown) {
   console.log("Error in chat API:", error);

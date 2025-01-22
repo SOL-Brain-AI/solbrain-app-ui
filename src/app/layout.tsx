@@ -48,7 +48,7 @@ export default function RootLayout({
                     Roadmap
                   </Link>
                   <a
-                    href="https://twitter.com/solbrain_ai"
+                    href="https://x.com/SOLBrainAI"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-foreground-muted hover:text-foreground transition-colors"

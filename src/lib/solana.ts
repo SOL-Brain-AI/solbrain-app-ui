@@ -5,7 +5,14 @@ const connection = new Connection(
   `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_API_KEY}`
 );
 
-async function getTokenPrice(tokenMint: string): Promise<any> {
+interface TokenPrice {
+  price: number | null;
+  priceChange24h: number | null;
+  volume24h: number | null;
+  marketCap: number | null;
+}
+
+async function getTokenPrice(tokenMint: string): Promise<TokenPrice | null> {
   try {
     // Fetch price data from CoinGecko
     const response = await fetch(
@@ -41,7 +48,21 @@ async function getTokenPrice(tokenMint: string): Promise<any> {
   }
 }
 
-export async function getTokenInfo(tokenMint: string): Promise<any> {
+interface TokenInfo {
+  address: string;
+  decimals: number;
+  supply: number;
+  authority: string | null;
+  freezeAuthority: string | null;
+  price: number | null;
+  priceChange24h: number | null;
+  volume24h: number | null;
+  marketCap: number | null;
+}
+
+export async function getTokenInfo(
+  tokenMint: string
+): Promise<TokenInfo | string> {
   try {
     const mint = new PublicKey(tokenMint);
     const accountInfo = await connection.getParsedAccountInfo(mint);
@@ -69,7 +90,6 @@ export async function getTokenInfo(tokenMint: string): Promise<any> {
       supply: Number(info.supply) / Math.pow(10, info.decimals),
       authority: info.mintAuthority ?? null,
       freezeAuthority: info.freezeAuthority ?? null,
-      isInitialized: true,
       // Price and market data
       price: priceInfo?.price ?? null,
       priceChange24h: priceInfo?.priceChange24h ?? null,

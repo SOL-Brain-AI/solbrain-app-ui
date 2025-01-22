@@ -2,15 +2,12 @@
 
 import { PrivyProvider as Provider } from "@privy-io/react-auth";
 import { toSolanaWalletConnectors } from "@privy-io/react-auth/solana";
-import { useRouter } from "next/navigation";
 
 const solanaConnectors = toSolanaWalletConnectors({
   shouldAutoConnect: false,
 });
 
 export function PrivyProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-
   return (
     <Provider
       appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID!}
@@ -22,8 +19,8 @@ export function PrivyProvider({ children }: { children: React.ReactNode }) {
           showWalletLoginFirst: true,
         },
         externalWallets: {
-          solana: { 
-            connectors: solanaConnectors
+          solana: {
+            connectors: solanaConnectors,
           },
         },
         solanaClusters: [

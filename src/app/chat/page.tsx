@@ -47,7 +47,7 @@ export default function ChatPage() {
                     ? m.toolInvocations.map((toolInvocation) => {
                         return (
                           <div key={toolInvocation.toolCallId}>
-                            {/* @ts-ignore this will exist */}
+                            {/* @ts-expect-error this will exist */}
                             {toolInvocation.result}
                           </div>
                         );
