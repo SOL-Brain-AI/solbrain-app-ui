@@ -113,8 +113,8 @@ export default function About() {
             <div className="relative glass-panel p-6 overflow-hidden">
               <div className="redacted">
                 <p className="text-foreground-muted leading-relaxed text-lg">
-                  Our neural networks are directly interfaced with Solana's RPC
-                  nodes, creating a symbiotic relationship between AI and
+                  Our neural networks are directly interfaced with Solana{"'"}s
+                  RPC nodes, creating a symbiotic relationship between AI and
                   blockchain. This unique architecture allows us to process and
                   analyze blockchain data at unprecedented speeds, turning raw
                   data into actionable intelligence in milliseconds.
