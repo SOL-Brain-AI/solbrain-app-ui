@@ -56,7 +56,7 @@ export default function RootLayout({
                     <Twitter size={20} />
                   </a>
                   <a
-                    href="https://t.me/solbrain_ai"
+                    href="https://t.me/+pK_LKZ6gs6FiMzUx"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-foreground-muted hover:text-foreground transition-colors"
