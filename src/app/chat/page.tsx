@@ -24,8 +24,10 @@ export default function ChatPage() {
     <AuthGuard>
       <div className="flex-1 flex flex-col items-center justify-start p-4 md:p-12">
         <div className="z-10 max-w-4xl w-full">
-          <h1 className="text-4xl font-bold mb-8 text-center gradient-text">
-            SOLBrain Chat
+          <h1 className="text-5xl font-bold mb-8 text-center">
+            <span className="glitch-text" data-text="SOLBrain Chat">
+              SOLBrain Chat
+            </span>
           </h1>
 
           <div className="flex flex-col space-y-4 mb-8 glass-panel p-6 min-h-[400px]">
