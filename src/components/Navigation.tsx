@@ -97,7 +97,7 @@ export function Navigation() {
               <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
             </a>
             <a
-              href="https://t.me/+pK_LKZ6gs6FiMzUx"
+              href="https://t.me/SOLBrainAI"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground-muted hover:text-foreground transition-colors"
